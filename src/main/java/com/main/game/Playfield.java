@@ -8,11 +8,11 @@ public class Playfield {
     private int cols = 0;
 
 
-    public void SetPlayerPos(int row, int columns) {
+    public void SetPlayerPos(int row, int columns, int iconIndex) {
         // Lösche die alte Spielerposition
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                if (field[i][j] == 1) {
+                if (field[i][j] == iconIndex) {
                     field[i][j] = 0; // Alte Position zurücksetzen
                     break;
                 }
@@ -20,13 +20,13 @@ public class Playfield {
         }
 
         // Setze die neue Spielerposition
-        field[row][columns] = 1;
+        field[row][columns] = iconIndex;
     }
 
-    public int[] GetPlayerPos() {
+    public int[] GetPlayerPos(int iconIndex) {
         for(int i = 0; i < rows; i++) {
             for(int j = 0; j < cols; j++) {
-                if(field[i][j] == 1) {
+                if(field[i][j] == iconIndex) {
                     int[] user_position = new int[2];
                     user_position[0] = i;
                     user_position[1] = j;
@@ -74,6 +74,12 @@ public class Playfield {
                 // Prüfe, auf Spieler Position
                 if(field[i][j] == 1) {
                     System.out.printf("| Ω ");
+                }
+                else if(field[i][j] == 2) {
+                    System.out.printf("| § ");
+                }
+                else if(field[i][j] == 3) {
+                    System.out.printf("| € ");
                 }
                 // Prüfe, auf hindernis
                 else if(field[i][j] == 99) {

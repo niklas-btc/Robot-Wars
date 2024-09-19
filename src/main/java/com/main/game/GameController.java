@@ -57,7 +57,9 @@ public class GameController {
 
 
     public void addNewPlayer(String playerName) {
-        Player player = new Player(playerName, this.playfield);
+
+        int iconIndex = players.size()+1; // 1 = Spieler1 (Ω), 2 = Spieler 2 (§)
+        Player player = new Player(playerName, iconIndex, this.playfield);
         players.add(player);
     }
 
@@ -82,9 +84,10 @@ public class GameController {
 
     // Erhalte das Spielfeld in dem Anzeigeformat
     public void getPlayfield() {
+        String[] playerIcons = new String[]{"Ω", "§", "€"};
         printer.clear();
-        printer.print_bold("Runde: " + getRound() + " von " + getRoundLimit() + "\t\t\t|\t\t");
-        printer.println_bold( players.get(getActivePlayerIndex()).getName() + " ist am Zug!", "orange");
+        printer.print_bold("Runde: " + getRound() + " von " + getRoundLimit() + "\t\t\t|\t");
+        printer.println_bold( players.get(getActivePlayerIndex()).getName() + " ist am Zug! (" + playerIcons[getActivePlayerIndex()] + ")", "orange");
         printer.println_bold("-------------------------------------------------");
         playfield.showPlayField();
         printer.println_bold("-------------------------------------------------");

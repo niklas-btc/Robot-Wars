@@ -7,16 +7,20 @@ public class Player {
     // Objekt Eigenschaften
     private Playfield playfield;
     private String name;
+    private int iconIndex = 0;
 
     private int posX = 1;
     private int posY = 1;
 
 
     // Konstruktor
-    public Player(String name, Playfield playfield) {
+    public Player(String name, int iconIndex, Playfield playfield) {
         this.playfield = playfield;
-        playfield.SetPlayerPos(posY, posX); // Setzte die Start Position des Spielers
+        this.posY = iconIndex+1;
+        this.posX = iconIndex+1;
+        playfield.SetPlayerPos(posY, posX, iconIndex); // Setzte die Start Position des Spielers
         this.name = name;
+        this.iconIndex = iconIndex;
     }
 
     public String getName(){
@@ -50,19 +54,19 @@ public class Player {
 
     public void moveLeft(){
         posX--;
-        playfield.SetPlayerPos(posY, posX);
+        playfield.SetPlayerPos(posY, posX, this.iconIndex);
     }
     public void moveRight(){
         posX++;
-        playfield.SetPlayerPos(posY, posX);
+        playfield.SetPlayerPos(posY, posX, this.iconIndex);
     }
     public void moveUp(){
         posY--;
-        playfield.SetPlayerPos(posY, posX);
+        playfield.SetPlayerPos(posY, posX, this.iconIndex);
     }
     public void moveDown(){
         posY++;
-        playfield.SetPlayerPos(posY, posX);
+        playfield.SetPlayerPos(posY, posX, this.iconIndex);
     }
 
 }

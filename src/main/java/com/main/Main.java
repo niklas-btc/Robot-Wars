@@ -26,6 +26,7 @@ public class Main {
         controller.initializeNewGame();
         printer.println_bold("\n--- Das Spiel wurde erfolgreich Initialisiert ---" ,"green");
 
+        String[] playerIcons = new String[]{"Ω", "§", "€"};
 
         // Spieler konfigurationen treffen
         boolean morePlayers = true;
@@ -33,7 +34,7 @@ public class Main {
             printer.print("\nTrage den Namen des " + (controller.players.size()+1) + ". Spielers ein: ");
             String playerName = scanner.nextLine();
             controller.addNewPlayer(playerName);
-            printer.println_bold( "--- " + playerName + " wurde als Spieler mit der Figur Ω hinzugefügt ---", "green");
+            printer.println_bold( "--- " + playerName + " wurde als Spieler mit der Figur " + playerIcons[controller.players.size()-1] + " hinzugefügt ---", "green");
 
             // Maximal 3 Spieler erlaubt
             if(controller.players.size() < 3) {
@@ -52,6 +53,8 @@ public class Main {
         printer.print_bold("\nSpiel konfigurationen abgeschlossen. Starte das Spiel mit Enter", "green");
         scanner.nextLine();
 
+
+        // Starte ein neues Spiel
         controller.startNewGame();
 
         while (controller.getRound() < controller.getRoundLimit()) {
