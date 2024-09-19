@@ -67,4 +67,7 @@ public class Printer {
         println(message, "reset"); // Standardfarbe verwenden
     }
 
+    public void clear(){
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+    }
 }

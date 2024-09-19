@@ -1,6 +1,5 @@
-package com.main.managment;
-
-import java.io.IOException;
+package com.main.game;
+import java.util.Random;
 
 public class Playfield {
 
@@ -50,9 +49,19 @@ public class Playfield {
     }
 
     public void InitializeNewPlayField(){
+        Random rand = new Random();
+
         for(int i = 0; i < rows; i++) {
             for(int j = 0; j < cols; j++) {
-                field[i][j] = 0;
+                // Mit einer Wahrscheinlichkeit von 5% stelle ein hindernisfeld da
+                int n = rand.nextInt(100);
+                if(n < 5) {
+                    field[i][j] = 99; // 99 = Hindernis index, 1,2,3 = Spieler Index, 0 = leer
+                    System.out.printf("| # ");
+                    continue;
+                }
+
+                field[i][j] = 0; // 99 = Hindernis index, 1,2,3 = Spieler Index, 0 = leer
                 System.out.printf("|\t");
             }
             System.out.printf("|%n");
@@ -60,12 +69,15 @@ public class Playfield {
     }
 
     public void showPlayField() {
-        ClearConsole();
         for(int i = 0; i < rows; i++) {
             for(int j = 0; j < cols; j++) {
                 // Prüfe, auf Spieler Position
                 if(field[i][j] == 1) {
                     System.out.printf("| Ω ");
+                }
+                // Prüfe, auf hindernis
+                else if(field[i][j] == 99) {
+                    System.out.printf("| # ");
                 }else {
                     System.out.printf("|\t");
                 }

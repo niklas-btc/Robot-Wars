@@ -1,8 +1,8 @@
 package com.main;
 import com.main.database.user.UserRepo;
+import com.main.game.player.Player;
 import com.main.general.Printer;
-import com.main.managment.GameController;
-import com.main.managment.Playfield;
+import com.main.game.GameController;
 
 import java.util.*;
 
@@ -11,31 +11,26 @@ public class Main {
     static UserRepo userRepo = new UserRepo();
 
     public static void main(String[] args) {
-        //List<User> users = userRepo.readAllUsers();
-        //for (User user : users) {
-            // int UID = user.GetID();
-            // String username = user.GetUsername();
-
-            //  Formatierte Ausgabe über String Interpolation
-            //System.out.printf("ID: %s | Benutzername: %s %n", UID, username); // %n = Zeilenumbruch, %s = stellt String dar, %S stellt String in UpperCase dar
-        //}
         Scanner scanner = new Scanner(System.in);
         Printer printer = new Printer();
+
+
         // Erstelle eine Hashmap mit Spiel konfigurationseinstellungen
         Map<String, Integer> settings = new HashMap<>();
         settings.put("rows", 10);
         settings.put("cols", 12);
+        settings.put("roundLimit", 20);
 
+        // Controller Objekt erzeugen und Spiel initialisieren
         GameController controller = new GameController(settings);
-
         controller.initializeNewGame();
-        printer.println_bold("--- Das Spiel wurde erfolgreich Initialisiert ---" ,"green");
+        printer.println_bold("\n--- Das Spiel wurde erfolgreich Initialisiert ---" ,"green");
+
 
         // Spieler konfigurationen treffen
         boolean morePlayers = true;
         while(morePlayers) {
-            printer.println("");
-            printer.print("Trage den Namen des " + (controller.players.size()+1) + ". Spielers ein: ");
+            printer.print("\nTrage den Namen des " + (controller.players.size()+1) + ". Spielers ein: ");
             String playerName = scanner.nextLine();
             controller.addNewPlayer(playerName);
             printer.println_bold( "--- " + playerName + " wurde als Spieler mit der Figur Ω hinzugefügt ---", "green");
@@ -43,7 +38,7 @@ public class Main {
             // Maximal 3 Spieler erlaubt
             if(controller.players.size() < 3) {
                 printer.print("Möchtest du einen weiteren Spieler hinzufügen? Ja/Nein: ", "yellow");
-                if(Objects.equals(scanner.nextLine(), "Ja")) {
+                if(Objects.equals(scanner.nextLine().toLowerCase(), "ja")) {
                     morePlayers = true;
                 }else morePlayers = false;
             }else {
@@ -52,13 +47,44 @@ public class Main {
                 morePlayers = false;
             }
         }
+
         // Spieler konfiguration abgeschlossen
-        printer.println("");
-        System.out.print("\033[0;1m" + "Spiel konfigurationen abgeschlossen. Starte das Spiel mit Enter");
+        printer.print_bold("\nSpiel konfigurationen abgeschlossen. Starte das Spiel mit Enter", "green");
         scanner.nextLine();
 
-        controller.playfield.showPlayField();
+        controller.startNewGame();
 
-        scanner.nextLine();
+        while (controller.getRound() < controller.getRoundLimit()) {
+
+            // Durchlaufe alle Spieler in der aktuellen Runde
+            while (controller.getActivePlayerIndex() < controller.players.size()) {
+
+                // erhalte das aktuelle Spieler Objekt
+                Player player = controller.players.get(controller.getActivePlayerIndex());
+
+                // Lade das aktuelle Spielfeld
+                controller.getPlayfield();
+
+                // Lese die validierte Benutzereingabe
+                boolean gultycmd = false;
+                while(!gultycmd) {
+                    printer.print_bold("(w = up, s = down, a = left, d = right): ", "magenta");
+                    String userInput = scanner.next();
+                    // Verarbeite den Zug des Spielers
+                    if(player.getMoveCommand(userInput.charAt(0))) {
+                        gultycmd = true;
+                    }else printer.println_bold("Ungültige Eingabe", "red");
+                }
+
+                // Spieler hat seinen Zug beendet, springe zum nächsten
+                controller.NextPlayer();
+            }
+
+            // Beende die aktuelle Runde
+            scanner.nextLine();
+            controller.nextRound();
+        }
+
+        printer.print_bold("\nMaximale Rundenanzahl erreicht, das Spiel wurde beendet!", "orange");
     }
 }
