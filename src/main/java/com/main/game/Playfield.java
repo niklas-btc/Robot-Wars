@@ -7,6 +7,13 @@ public class Playfield {
     private int rows = 0;
     private int cols = 0;
 
+    // row = Zeilen, columns = Spalten
+    public Playfield(int row, int columns) {
+        rows = row;
+        cols = columns;
+        field = new int[row][columns];
+    }
+
 
     public void SetPlayerPos(int row, int columns, int iconIndex) {
         // Lösche die alte Spielerposition
@@ -37,15 +44,6 @@ public class Playfield {
 
         // Kein Spieler gefunden
         return null;
-    }
-
-
-    // row = Zeilen, columns = Spalten
-    public Playfield(int row, int columns) {
-        rows = row;
-        cols = columns;
-        field = new int[row][columns];
-        field[0][0] = 1; // Startposition des Spielers
     }
 
     public void InitializeNewPlayField(){
@@ -89,13 +87,6 @@ public class Playfield {
                 }
             }
             System.out.printf("|%n");
-        }
-    }
-
-    public void ClearConsole(){
-        int lines = 20;
-        for(int i = 0; i < lines; i++) {
-            System.out.println();
         }
     }
 }
