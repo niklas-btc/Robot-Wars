@@ -86,11 +86,9 @@ public class GameController {
     public void getPlayfield() {
         String[] playerIcons = new String[]{"Ω", "§", "€"};
         printer.clear();
-        printer.print_bold("Runde: " + getRound() + " von " + getRoundLimit() + "\t\t\t|\t");
+        printer.print_bold("Runde: " + getRound() + " von " + getRoundLimit() + " | ");
         printer.println_bold( players.get(getActivePlayerIndex()).getName() + " ist am Zug! (" + playerIcons[getActivePlayerIndex()] + ")", "orange");
-        printer.println_bold("-------------------------------------------------");
         playfield.showPlayField();
-        printer.println_bold("-------------------------------------------------");
     }
 
 }

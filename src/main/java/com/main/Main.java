@@ -15,6 +15,8 @@ public class Main {
         Printer printer = new Printer();
 
 
+        printer.println_bold("\n--- Herzlich Willkommen bei RoboWars ---\n" ,"green");
+
         // Erstelle eine Hashmap mit Spiel konfigurationseinstellungen
         Map<String, Integer> settings = new HashMap<>();
         settings.put("rows", 10);
@@ -24,7 +26,7 @@ public class Main {
         // Controller Objekt erzeugen und Spiel initialisieren
         GameController controller = new GameController(settings);
         controller.initializeNewGame();
-        printer.println_bold("\n--- Das Spiel wurde erfolgreich Initialisiert ---" ,"green");
+        printer.println_bold("\n--- Spielfeld wurde Initialisiert ---" ,"green");
 
         String[] playerIcons = new String[]{"Ω", "§", "€"};
 
@@ -88,6 +90,6 @@ public class Main {
             controller.nextRound();
         }
 
-        printer.print_bold("\nMaximale Rundenanzahl erreicht, das Spiel wurde beendet!", "orange");
+        printer.print_bold("\nMaximale Rundenanzahl erreicht, das Spiel wurde beendet!", "red");
     }
 }

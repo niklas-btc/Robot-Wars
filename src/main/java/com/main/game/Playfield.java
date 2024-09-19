@@ -48,45 +48,51 @@ public class Playfield {
 
     public void InitializeNewPlayField(){
         Random rand = new Random();
+        System.out.println("╔════════════════════════════════════╗");
 
-        for(int i = 0; i < rows; i++) {
-            for(int j = 0; j < cols; j++) {
+        for (int i = 0; i < rows; i++) {
+            System.out.print("║");
+            for (int j = 0; j < cols; j++) {
                 // Mit einer Wahrscheinlichkeit von 5% stelle ein hindernisfeld da
                 int n = rand.nextInt(100);
                 if(n < 5) {
                     field[i][j] = 99; // 99 = Hindernis index, 1,2,3 = Spieler Index, 0 = leer
-                    System.out.printf("| # ");
+                    System.out.print(" # ");  // Hindernis
                     continue;
                 }
+                System.out.print(" . ");  // Platzhalter für leere Felder
 
-                field[i][j] = 0; // 99 = Hindernis index, 1,2,3 = Spieler Index, 0 = leer
-                System.out.printf("|\t");
             }
-            System.out.printf("|%n");
+            System.out.println("║");
         }
+        System.out.println("╚════════════════════════════════════╝");
     }
 
     public void showPlayField() {
-        for(int i = 0; i < rows; i++) {
-            for(int j = 0; j < cols; j++) {
-                // Prüfe, auf Spieler Position
-                if(field[i][j] == 1) {
-                    System.out.printf("| Ω ");
+        System.out.println("╔════════════════════════════════════╗");
+        for (int i = 0; i < rows; i++) {
+            System.out.print("║");
+            for (int j = 0; j < cols; j++) {
+                // Prüfe auf Spieler Position
+                if (field[i][j] == 1) {
+                    System.out.print(" Ω ");  // Spieler 1
+                } else if (field[i][j] == 2) {
+                    System.out.print(" § ");  // Spieler 2
+                } else if (field[i][j] == 3) {
+                    System.out.print(" € ");  // Spieler 3
                 }
-                else if(field[i][j] == 2) {
-                    System.out.printf("| § ");
+                // Prüfe auf Hindernis
+                else if (field[i][j] == 99) {
+                    System.out.print(" # ");  // Hindernis
                 }
-                else if(field[i][j] == 3) {
-                    System.out.printf("| € ");
-                }
-                // Prüfe, auf hindernis
-                else if(field[i][j] == 99) {
-                    System.out.printf("| # ");
-                }else {
-                    System.out.printf("|\t");
+                // Leeres Feld
+                else {
+                    System.out.print(" . ");  // Platzhalter für leere Felder
                 }
             }
-            System.out.printf("|%n");
+            System.out.println("║");
         }
+        System.out.println("╚════════════════════════════════════╝");
     }
+
 }
