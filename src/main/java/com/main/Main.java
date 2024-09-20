@@ -57,7 +57,7 @@ public class Main {
         // Starte ein neues Spiel
         controller.startNewGame();
 
-        while (controller.getRound() < controller.getRoundLimit()) {
+        while (controller.getRound() < controller.getRoundLimit()+1) {
 
             // Durchlaufe alle Spieler in der aktuellen Runde
             while (controller.getActivePlayerIndex() < controller.players.size()) {
