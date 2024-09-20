@@ -1,5 +1,4 @@
 package com.main;
-import com.main.database.user.UserRepo;
 import com.main.game.player.Player;
 import com.main.general.Printer;
 import com.main.game.GameController;
@@ -8,7 +7,6 @@ import java.util.*;
 
 public class Main {
 
-    static UserRepo userRepo = new UserRepo();
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -73,7 +71,9 @@ public class Main {
                 // Lese die validierte Benutzereingabe
                 boolean gultycmd = false;
                 while(!gultycmd) {
-                    printer.print_bold("(w = up, s = down, a = left, d = right): ", "magenta");
+                    printer.println_bold("Move : W = Up │ S = Down │ A = Left │ D = Right", "blue");
+                    printer.println_bold("Shoot: 1 = Up │ 2 = Down │ 3 = Left │ 4 = Right", "magenta");
+                    printer.print("Eingabe: ");
                     String userInput = scanner.next();
                     // Verarbeite den Zug des Spielers und stelle ihn, wenn gültig da
                     String errorMsg = player.checkAndSetValidMoveCommand(userInput.charAt(0));

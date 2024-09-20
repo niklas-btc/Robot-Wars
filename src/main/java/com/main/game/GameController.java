@@ -79,15 +79,15 @@ public class GameController {
     public void nextRound(){
         setActivePlayerIndex(0);
         setRound(getRound()+1);
-        getPlayfield();
     }
 
     // Erhalte das Spielfeld in dem Anzeigeformat
     public void getPlayfield() {
         String[] playerIcons = new String[]{"Ω", "§", "€"};
+        Player player = players.get(getActivePlayerIndex()); // Aktueller Spieler
         printer.clear();
         printer.print_bold("Runde: " + getRound() + " von " + getRoundLimit() + " | ");
-        printer.println_bold( players.get(getActivePlayerIndex()).getName() + " ist am Zug! (" + playerIcons[getActivePlayerIndex()] + ")", "orange");
+        printer.println_bold( player.getName() + " ist am Zug! (" + playerIcons[getActivePlayerIndex()] + ") | " + player.getHealth() + "HP", "orange");
         playfield.showPlayField();
     }
 
