@@ -15,7 +15,17 @@ public class Playfield {
     }
 
 
-    public void SetPlayerPos(int row, int columns, int iconIndex) {
+    public boolean SetPlayerPos(int row, int columns, int iconIndex) {
+        // Prüfe, on die neue Postion sich innerhalb des Spielfeldes befindet
+        if(row < 0 || row >= rows || columns < 0 || columns >= cols) {
+            return false;
+        }
+
+        // Prüfe, ob das Feld welches der Spieler betreten möchte ein Hindernis ist
+        if(field[row][columns] == 99) {
+            return false;
+        }
+
         // Lösche die alte Spielerposition
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
@@ -28,6 +38,7 @@ public class Playfield {
 
         // Setze die neue Spielerposition
         field[row][columns] = iconIndex;
+        return true;
     }
 
     public int[] GetPlayerPos(int iconIndex) {

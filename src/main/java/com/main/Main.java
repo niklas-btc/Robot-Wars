@@ -15,7 +15,7 @@ public class Main {
         Printer printer = new Printer();
 
 
-        printer.println_bold("\n--- Herzlich Willkommen bei RoboWars ---\n" ,"green");
+        printer.println_bold("\n---   Willkommen bei Robot-Wars   ---\n" ,"green");
 
         // Erstelle eine Hashmap mit Spiel konfigurationseinstellungen
         Map<String, Integer> settings = new HashMap<>();
@@ -75,10 +75,14 @@ public class Main {
                 while(!gultycmd) {
                     printer.print_bold("(w = up, s = down, a = left, d = right): ", "magenta");
                     String userInput = scanner.next();
-                    // Verarbeite den Zug des Spielers
-                    if(player.getMoveCommand(userInput.charAt(0))) {
+                    // Verarbeite den Zug des Spielers und stelle ihn, wenn gültig da
+                    String errorMsg = player.checkAndSetValidMoveCommand(userInput.charAt(0));
+                    if(errorMsg == null) {
                         gultycmd = true;
-                    }else printer.println_bold("Ungültige Eingabe", "red");
+                    }else {
+                        controller.getPlayfield();
+                        printer.println_bold("--- Fehlermeldung: " + errorMsg + " ---", "red");
+                    };
                 }
 
                 // Spieler hat seinen Zug beendet, springe zum nächsten

@@ -23,6 +23,7 @@ public class Player {
         this.iconIndex = iconIndex;
     }
 
+    // Getter/Setter Zugriffsmethoden
     public String getName(){
         return name;
     }
@@ -32,41 +33,57 @@ public class Player {
     }
 
 
-    public boolean getMoveCommand(char cmd){
+    public String checkAndSetValidMoveCommand(char cmd){
 
         switch (cmd) {
             case 'w':
-                moveUp();
-                return true;
+                return moveUp();
             case 's':
-                moveDown();
-                return true;
+
+                return moveDown();
             case 'a':
-                moveLeft();
-                return true;
+
+                return moveLeft();
             case 'd':
-                moveRight();
-                return true;
+                return moveRight();
         }
-        return false;
+        return "Ungültige Eingabe";
     }
 
 
-    public void moveLeft(){
-        posX--;
-        playfield.SetPlayerPos(posY, posX, this.iconIndex);
+    // Aktualisiere die neue Spieler-Koordinate nur, wenn der Zug des Spielers gültig war,
+    // also er sich zu einem leeren Feld bewegt hat
+    public String moveLeft(){
+        int temp_posX = posX-1;
+        if(playfield.SetPlayerPos(posY, temp_posX, this.iconIndex)) {
+            posX = temp_posX;
+            return null;
+        }
+        return "Ungültiger Zug";
     }
-    public void moveRight(){
-        posX++;
-        playfield.SetPlayerPos(posY, posX, this.iconIndex);
+    public String moveRight(){
+        int temp_posX = posX+1;
+        if(playfield.SetPlayerPos(posY, temp_posX, this.iconIndex)) {
+            posX = temp_posX;
+            return null;
+        }
+        return "Ungültiger Zug";
     }
-    public void moveUp(){
-        posY--;
-        playfield.SetPlayerPos(posY, posX, this.iconIndex);
+    public String moveUp(){
+        int temp_posY = posY-1;
+        if(playfield.SetPlayerPos(temp_posY, posX, this.iconIndex)) {
+            posY = temp_posY;
+            return null;
+        }
+        return "Ungültiger Zug";
     }
-    public void moveDown(){
-        posY++;
-        playfield.SetPlayerPos(posY, posX, this.iconIndex);
+    public String moveDown(){
+        int temp_posY = posY+1;
+        if(playfield.SetPlayerPos(temp_posY, posX, this.iconIndex)) {
+            posY = temp_posY;
+            return null;
+        }
+        return "Ungültiger Zug";
     }
 
 }
