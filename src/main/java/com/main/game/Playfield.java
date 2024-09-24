@@ -176,7 +176,7 @@ public class Playfield {
                 int n = rand.nextInt(100);
                 if(n < 8) {
                     field[i][j] = 99; // 99 = Hindernis index, 1,2,3 = Spieler Index, 0 = leer
-                    System.out.print(" \uD83D\uDDFB ");  // Hindernis
+                    System.out.print(" \uD83D\uDDFB  ");  // Hindernis
                     continue;
                 }
                 System.out.print("   ");  // Platzhalter für leere Felder
@@ -194,25 +194,25 @@ public class Playfield {
             for (int j = 0; j < cols; j++) {
                 // Prüfe auf Spieler Position
                 if (field[i][j] == 1) {
-                    printer.print(" ✈\uFE0F ", "yellow");  // Spieler 1
+                    printer.print(" ✈\uFE0F  ", "yellow");  // Spieler 1
                 } else if (field[i][j] == 2) {
-                    printer.print(" \uD83D\uDEE9\uFE0F ", "cyan"); // Spieler 2
+                    printer.print(" \uD83D\uDEE9\uFE0F  ", "cyan"); // Spieler 2
                 } else if (field[i][j] == 3) {
-                    printer.print(" \uD83D\uDE81 ", "magenta"); // Spieler 3
+                    printer.print(" \uD83D\uDE81  ", "magenta"); // Spieler 3
                 }
                 // Prüfe auf Hindernis
                 else if (field[i][j] == 99) {
-                    printer.print(" \uD83D\uDDFB ");  // Hindernis
+                    printer.print(" \uD83D\uDDFB  ");  // Hindernis
                 }
                 else if (field[i][j] == 991) {
-                    printer.print(" \uD83C\uDF0B ", "red");  // Hindernis als Schadensmodell
+                    printer.print(" \uD83C\uDF0B  ", "red");  // Hindernis als Schadensmodell
                 }
                 else if (field[i][j] == 992) {
-                    printer.print(" \uD83D\uDCA5 ", "red");  // Explosions Animationsicon 💥
+                    printer.print(" \uD83D\uDCA5  ", "red");  // Explosions Animationsicon 💥
                 }
                 // Prüfe auf Kanonenkugel
                 else if (field[i][j] == 100) {
-                    printer.print(" \uD83D\uDE80 ", "red");  // Kanonenkugel
+                    printer.print(" \uD83D\uDE80  ", "red");  // Kanonenkugel
                 }
                 // Leeres Feld
                 else {
