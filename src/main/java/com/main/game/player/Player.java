@@ -30,7 +30,7 @@ public class Player {
             valid = playfield.SetPlayerPos(this.posY, this.posX, iconIndex);
         }
 
-        this.health = 100;
+        this.health = 20;
         this.name = name;
         this.iconIndex = iconIndex;
     }
@@ -52,8 +52,16 @@ public class Player {
         this.health = health;
     }
 
-    public void GetDmg(int dmg){
+    public void getDmg(int dmg){
         this.health = health - dmg;
+    }
+
+    public int getPosX() {
+        return posX;
+    }
+
+    public int getPosY() {
+        return posY;
     }
 
 

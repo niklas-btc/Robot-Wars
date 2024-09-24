@@ -13,20 +13,20 @@ public class Main {
         Printer printer = new Printer();
 
 
-        printer.println_bold("\n---   Willkommen bei Robot-Wars   ---\n" ,"green");
+        printer.println_bold("\n ---    Herzlich Willkommen bei Robot-Wars    ---\n" ,"green");
 
         // Erstelle eine Hashmap mit Spiel konfigurationseinstellungen
         Map<String, Integer> settings = new HashMap<>();
         settings.put("rows", 10);
-        settings.put("cols", 12);
+        settings.put("cols", 16);
         settings.put("roundLimit", 20);
 
         // Controller Objekt erzeugen und Spiel initialisieren
         GameController controller = new GameController(settings);
         controller.initializeNewGame();
-        printer.println_bold("\n--- Spielfeld wurde Initialisiert ---" ,"green");
+        printer.println_bold("\n ---    Spielfeld erfolgreich Initialisiert   ---" ,"green");
 
-        String[] playerIcons = new String[]{"Ω", "§", "€"};
+        String[] playerIcons = new String[]{"✈\uFE0F", "\uD83D\uDEE9\uFE0F", "\uD83D\uDE81"};
 
         // Spieler konfigurationen treffen
         boolean morePlayers = true;
@@ -56,8 +56,9 @@ public class Main {
 
         // Starte ein neues Spiel
         controller.startNewGame();
+        boolean gameOver = false;
 
-        while (controller.getRound() < controller.getRoundLimit()+1) {
+        while (controller.getRound() < controller.getRoundLimit()+1 && !gameOver) {
 
             // Durchlaufe alle Spieler in der aktuellen Runde
             while (controller.getActivePlayerIndex() < controller.players.size()) {
@@ -85,6 +86,22 @@ public class Main {
                     };
                 }
 
+                // Prüfe, ob ein Spieler getroffen wurde (-1 = Kein Spieler getroffen)
+                int playerThatIsHit = controller.playfield.getPlayerThatIsHit();
+                if(playerThatIsHit != -1) {
+                    controller.players.get(playerThatIsHit).getDmg(10);
+                    controller.playfield.setPlayerThatIsHit(-1);
+                    if(controller.players.get(playerThatIsHit).getHealth() <= 0) {
+                        controller.playfield.SetBlankField(controller.players.get(playerThatIsHit).getPosY(), controller.players.get(playerThatIsHit).getPosX());
+                        controller.players.remove(playerThatIsHit);
+                    }
+                    // prüfen, ob nur noch ein Spieler existiert, falls ja, hat dieser gewonnen
+                    if(controller.players.size() <= 1) {
+                        gameOver = true;
+                        break;
+                    }
+                }
+
                 // Spieler hat seinen Zug beendet, springe zum nächsten
                 controller.NextPlayer();
             }
@@ -94,6 +111,12 @@ public class Main {
             controller.nextRound();
         }
 
-        printer.print_bold("\nMaximale Rundenanzahl erreicht, das Spiel wurde beendet!", "red");
+        // Wenn gameOver true ist, dann wurde das Spiel beendet, indem einer der Spieler gewonnen hat, falls nicht, ist es ein RoundOut Ende
+        if(gameOver) {
+            String activePlayerName = controller.players.get(controller.getActivePlayerIndex()).getName();
+            printer.print_bold("\nSpiel beendet: " + activePlayerName + " hat gewonnen!", "green");
+        }else{
+            printer.print_bold("\nMaximale Rundenanzahl erreicht, das Spiel wurde beendet!", "red");
+        }
     }
 }

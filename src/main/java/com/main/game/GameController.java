@@ -83,7 +83,7 @@ public class GameController {
 
     // Erhalte das Spielfeld in dem Anzeigeformat
     public void getPlayfield() {
-        String[] playerIcons = new String[]{"Ω", "§", "€"};
+        String[] playerIcons = new String[]{"✈\uFE0F", "\uD83D\uDEE9\uFE0F", "\uD83D\uDE81"};
         Player player = players.get(getActivePlayerIndex()); // Aktueller Spieler
         printer.clear();
         printer.print_bold("Runde: " + getRound() + " von " + getRoundLimit() + " | ");
